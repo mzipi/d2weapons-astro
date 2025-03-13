@@ -1,0 +1,76 @@
+---
+const { weapons = [], loading } = Astro.props;
+---
+
+<div id="weapons-container">
+    {
+        loading ? (
+            <div id="loading-message">Cargando...</div>
+        ) : weapons.length > 0 ? (
+            weapons.map((weapon) => (
+                <div class="weapon" key={weapon.id}>
+                    <div class="weapon-image-container">
+                        <img
+                            src={`https://www.bungie.net${weapon.displayProperties.icon}`}
+                            alt={weapon.displayProperties.name}
+                            class="weapon-icon"
+                        />
+                        {weapon.iconWatermark && (
+                            <img
+                                src={`https://www.bungie.net${weapon.iconWatermark}`}
+                                alt="watermark"
+                                class="weapon-watermark"
+                            />
+                        )}
+                    </div>
+                    <>
+                        <strong>{weapon.displayProperties.name}</strong>
+                        <br />
+                    </>
+                    <>
+                        <em>{weapon.flavorText || "No hay descripción"}</em>
+                        <br />
+                    </>
+                    <h4>Perks:</h4>
+                    <div class="sockets-container">
+                        {weapon.sockets && weapon.sockets.length > 1 ? (
+                            weapon.sockets.slice(1, 5).map((socket, index) => (
+                                <div class="socket" key={index}>
+                                    <strong>
+                                        Socket {index + 2} -{" "}
+                                        {socket.itemTypeDisplayName ||
+                                            "Desconocido"}
+                                    </strong>
+                                    <ul>
+                                        {socket.perks.length > 0 ? (
+                                            socket.perks.map(
+                                                (perk, perkIndex) => (
+                                                    <li key={perkIndex}>
+                                                        {perk.icon && (
+                                                            <img
+                                                                src={`https://www.bungie.net${perk.icon}`}
+                                                                alt={perk.name}
+                                                                width="30"
+                                                            />
+                                                        )}
+                                                        {perk.name}
+                                                    </li>
+                                                ),
+                                            )
+                                        ) : (
+                                            <li>No hay perks disponibles</li>
+                                        )}
+                                    </ul>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No tiene sockets con perks aleatorios</p>
+                        )}
+                    </div>
+                </div>
+            ))
+        ) : (
+            <p>No se encontraron armas.</p>
+        )
+    }
+</div>

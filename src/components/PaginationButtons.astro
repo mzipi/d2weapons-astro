@@ -1,0 +1,8 @@
+---
+const { onPrevPage, onNextPage, isPrevDisabled, isNextDisabled } = Astro.props;
+---
+
+<div id="buttons-container" style="display: none;">
+  <button id="prev-page" on:click={onPrevPage} disabled={isPrevDisabled}>Anterior</button>
+  <button id="next-page" on:click={onNextPage} disabled={isNextDisabled}>Siguiente</button>
+</div>

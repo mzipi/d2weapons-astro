@@ -1,168 +1,19 @@
-<!doctype html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="styles.css">
-        <title>Armas Destiny</title>
-    </head>
-    <body>
-        <h1>Buscar Armas</h1>
-        <input
-            type="text"
-            id="search"
-            placeholder="Buscar arma por nombre o descripción"
-            required
-        />
+---
+import WeaponsContainer from "../components/WeaponsContainer.astro";
+import LoadingMessage from "../components/LoadingMessage.astro";
+import PaginationButtons from "../components/PaginationButtons.astro";
+import SearchInput from "../components/SearchInput.astro";
+import Layout from "../layouts/Layout.astro";
+---
 
-        <div id="armas-container"></div>
-        <div id="loading-message" style="display:none;">Cargando...</div>
-
-        <!-- Controles de paginación (fuera de armas-container para que no se borren) -->
-        <div id="buttons-container" style="display: none;">
-            <button id="prev-page" disabled>Anterior</button>
-            <button id="next-page" disabled>Siguiente</button>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const searchInput = document.getElementById("search");
-                const armasContainer =
-                    document.getElementById("armas-container");
-                const loadingMessage =
-                    document.getElementById("loading-message");
-                const buttonsContainer =
-                    document.getElementById("buttons-container");
-                const prevButton = document.getElementById("prev-page");
-                const nextButton = document.getElementById("next-page");
-
-                let currentPage = 1;
-                let totalPages = 1;
-
-                searchInput.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        currentPage = 1; // Reiniciar página
-                        fetchArmas(searchInput.value);
-                    }
-                });
-
-                prevButton.addEventListener("click", () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        fetchArmas(searchInput.value);
-                    }
-                });
-
-                nextButton.addEventListener("click", () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        fetchArmas(searchInput.value);
-                    }
-                });
-
-                async function fetchArmas(searchTerm) {
-                    loadingMessage.style.display = "block";
-                    armasContainer.innerHTML = "";
-
-                    try {
-                        const response = await fetch(
-                            `/api/weapons?search=${encodeURIComponent(searchTerm)}&page=${currentPage}`,
-                        );
-                        const data = await response.json();
-
-                        const armas = data.armas;
-                        totalPages = data.totalPages;
-
-                        armasContainer.innerHTML = ""; // Limpiar resultados
-
-                        if (armas.length > 0) {
-                            armas.forEach((arma) => {
-                                const div = document.createElement("div");
-                                div.classList.add("arma");
-
-                                const iconUrl = `https://www.bungie.net${arma.displayProperties.icon}`;
-                                const watermarkUrl = arma.iconWatermark
-                                    ? `https://www.bungie.net${arma.iconWatermark}`
-                                    : "";
-
-                                div.innerHTML = ` 
-                                    <div class="arma-image-container">
-                                        <img src="${iconUrl}" alt="${arma.displayProperties.name}" class="arma-icon">
-                                        ${watermarkUrl ? `<img src="${watermarkUrl}" alt="watermark" class="arma-watermark">` : ""}
-                                    </div>
-                                    <strong>${arma.displayProperties.name}</strong><br>
-                                    <em>${arma.flavorText || "No hay descripción"}</em><br>
-                                    <h4>Perks:</h4>
-                                    <div class="sockets-container">
-                                        ${
-                                            arma.sockets && arma.sockets.length > 1
-                                                ? arma.sockets
-                                                    .slice(1, 5)
-                                                    .map((socket, index) => {
-                                                        // Solo los sockets 2, 3, 4 y 5 (índices 1 a 4)
-                                                        return `
-                                                    <div class="socket">
-                                                        <strong>Socket ${index + 2} - ${socket.itemTypeDisplayName || "Desconocido"}</strong>
-                                                        <ul>
-                                                            ${
-                                                                socket.perks.length > 0
-                                                                    ? socket.perks
-                                                                        .map(
-                                                                            (perk) => `
-                                                                    <li>
-                                                                        ${perk.icon ? `<img src="https://www.bungie.net${perk.icon}" alt="${perk.name}" width="30">` : ""}
-                                                                        ${perk.name}
-                                                                    </li>
-                                                                `,
-                                                                        )
-                                                                        .join("")
-                                                                    : "<li>No hay perks disponibles</li>"
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                `;
-                                                    })
-                                                    .join("")
-                                                : "<p>No tiene sockets con perks aleatorios</p>"
-                                        }
-                                    </div>
-                                `;
-                                armasContainer.appendChild(div);
-
-                                // Mostrar toda la información en la consola
-                                console.log(
-                                    `Arma: ${arma.displayProperties.name}`,
-                                );
-                                arma.sockets.forEach((socket, index) => {
-                                    console.log(
-                                        `Socket ${index + 1}: ${socket.itemTypeDisplayName || "Desconocido"}`,
-                                    );
-                                    socket.perks.forEach((perk) => {
-                                        console.log(
-                                            `- Perk: ${perk.name} ${perk.icon ? `, Icono: ${perk.icon}` : ""}`,
-                                        );
-                                    });
-                                });
-                            });
-                        } else {
-                            armasContainer.innerHTML =
-                                "<p>No se encontraron armas.</p>";
-                        }
-
-                        // Habilitar/deshabilitar botones
-                        prevButton.disabled = currentPage === 1;
-                        nextButton.disabled =
-                            currentPage === totalPages || totalPages === 0;
-                    } catch (error) {
-                        armasContainer.innerHTML =
-                            "<p>Error al cargar los datos.</p>";
-                        console.error("Error en fetchArmas:", error);
-                    }
-
-                    loadingMessage.style.display = "none";
-                }
-            });
-        </script>
-    </body>
-</html>
+<Layout>
+    <SearchInput id="search-input" />
+    <WeaponsContainer id="weapons-container" />
+    <LoadingMessage id="loading-message" />
+    <PaginationButtons
+        id="pagination-buttons"
+        currentPage={0}
+        totalPages={0}
+        onPageChange={(page) => fetchWeapons(page)}
+    />
+</Layout>

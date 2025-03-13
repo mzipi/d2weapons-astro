@@ -9,10 +9,18 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@apollo/server": "^4.11.3",
+    "@as-integrations/h3": "^1.2.1",
     "@astrojs/react": "^4.2.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "apollo-server": "^3.13.0",
     "astro": "^5.4.2",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-ws": "^5.16.2",
+    "graphql-yoga": "^5.13.1",
+    "node-cache": "^5.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

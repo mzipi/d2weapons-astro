@@ -20,46 +20,64 @@ const findAmmoTypeNameFromNodeDefinition = (ammoTypeId, data) => {
     return null;
 };
 
+async function getManifestUrl() {
+    try {
+        const response = await fetch("https://www.bungie.net/Platform/Destiny2/Manifest/");
+
+        if (!response.ok) {
+            throw new Error('Error al obtener el manifiesto');
+        }
+
+        const data = await response.json();
+        const manifestPath = data.Response.jsonWorldContentPaths['es-mx'];
+        const manifestUrl = `https://www.bungie.net${manifestPath}`;
+        return manifestUrl
+    } catch (error) {
+        console.error('Error al obtener la URL:', error);
+        document.querySelector('h1').innerText = 'Hubo un error al obtener la URL.';
+    }
+}
+
 export async function GET({ url }) {
     const searchTerm = url.searchParams.get('search')?.toLowerCase();
     const page = parseInt(url.searchParams.get('page') || '1');
     const resultsPerPage = 1;
 
-    const destinyUrl = 'https://www.bungie.net/common/destiny2_content/json/es-mx/aggregate-2c61300f-29d3-419a-abea-a7ba76137527.json';
+    const destinyUrl = await getManifestUrl();
 
     try {
         const response = await fetch(destinyUrl);
         const data = await response.json();
 
         if (data && data.DestinyInventoryItemDefinition) {
-            const armas = Object.values(data.DestinyInventoryItemDefinition)
+            const weapons = Object.values(data.DestinyInventoryItemDefinition)
                 .filter(item => item.itemType === 3)
-                .filter(arma => arma.displayProperties.name.toLowerCase().includes(searchTerm));
+                .filter(weapon => weapon.displayProperties.name.toLowerCase().includes(searchTerm));
 
             // Paginación
-            const totalResults = armas.length;
+            const totalResults = weapons.length;
             const totalPages = Math.ceil(totalResults / resultsPerPage);
             const startIndex = (page - 1) * resultsPerPage;
             const endIndex = startIndex + resultsPerPage;
 
-            const armasPagina = armas.slice(startIndex, endIndex);
+            const weaponsPage = weapons.slice(startIndex, endIndex);
 
-            const armasConSockets = armasPagina.map(arma => {
+            const weaponsSockets = weaponsPage.map(weapon => {
                 const sockets = [];
 
-                const defaultDamageTypeHash = arma.defaultDamageTypeHash;
+                const defaultDamageTypeHash = weapon.defaultDamageTypeHash;
                 const damageType = data.DestinyDamageTypeDefinition[defaultDamageTypeHash];
                 const damageTypeIcon = damageType ? `https://www.bungie.net${damageType.displayProperties.icon}` : null;
-                const itemSubType = arma.itemTypeDisplayName || "Desconocido";
-                const equippingBlock = arma.equippingBlock || {};
+                const itemSubType = weapon.itemTypeDisplayName || "Desconocido";
+                const equippingBlock = weapon.equippingBlock || {};
                 const ammoTypeId = equippingBlock.ammoType || 4;
                 const ammoTypeName = findAmmoTypeNameFromNodeDefinition(ammoTypeId, data);
-                const equipmentSlotTypeHash = arma.equippingBlock?.equipmentSlotTypeHash;
+                const equipmentSlotTypeHash = weapon.equippingBlock?.equipmentSlotTypeHash;
                 const equipmentSlot = equipmentSlotTypeHash ? data.DestinyEquipmentSlotDefinition[equipmentSlotTypeHash] : null;
                 const equipmentSlotName = equipmentSlot ? equipmentSlot.displayProperties.name : "Desconocido";
 
-                const stats = arma.stats?.stats
-                    ? Object.entries(arma.stats.stats)
+                const stats = weapon.stats?.stats
+                    ? Object.entries(weapon.stats.stats)
                         .filter(([statHash, statData], index) => ![4, 5, 6, 7].includes(index))
                         .map(([statHash, statData]) => {
                             const statDefinition = data.DestinyStatDefinition[statHash];
@@ -71,19 +89,19 @@ export async function GET({ url }) {
                         })
                     : [];
 
-                const breakerTypeHash = arma.breakerTypeHash ? data.DestinyBreakerTypeDefinition[arma.breakerTypeHash] : null;
+                const breakerTypeHash = weapon.breakerTypeHash ? data.DestinyBreakerTypeDefinition[weapon.breakerTypeHash] : null;
                 const breakerTypeIcon = breakerTypeHash?.displayProperties?.icon || null;
 
-                if (arma.sockets && arma.sockets.socketEntries) {
+                if (weapon.sockets && weapon.sockets.socketEntries) {
                     const primerosSockets = [
-                        arma.sockets.socketEntries[0],
-                        arma.sockets.socketEntries[1],
-                        arma.sockets.socketEntries[2],
-                        arma.sockets.socketEntries[3],
-                        arma.sockets.socketEntries[4],
-                        arma.sockets.socketEntries[6],
-                        arma.sockets.socketEntries[7],
-                        arma.sockets.socketEntries[8],
+                        weapon.sockets.socketEntries[0],
+                        weapon.sockets.socketEntries[1],
+                        weapon.sockets.socketEntries[2],
+                        weapon.sockets.socketEntries[3],
+                        weapon.sockets.socketEntries[4],
+                        weapon.sockets.socketEntries[6],
+                        weapon.sockets.socketEntries[7],
+                        weapon.sockets.socketEntries[8],
                     ];
 
                     primerosSockets.forEach((socket, index) => {
@@ -116,7 +134,7 @@ export async function GET({ url }) {
                 }
 
                 return {
-                    ...arma,
+                    ...weapon,
                     ammoTypeName,
                     damageTypeIcon,
                     itemSubType,
@@ -127,9 +145,8 @@ export async function GET({ url }) {
                 };
             });
 
-            // Devolver la respuesta usando `Response` directamente
             return new Response(JSON.stringify({
-                armas: armasConSockets,
+                weapons: weaponsSockets,
                 totalPages,
                 currentPage: page
             }), { status: 200, headers: { 'Content-Type': 'application/json' } });

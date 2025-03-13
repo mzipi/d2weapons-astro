@@ -1,0 +1,25 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.sockets-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+}
+
+.weapon-image-container {
+    position: relative;
+}
+
+.weapon-watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.socket ul {
+    list-style: none;
+    padding-left: 0;
+}

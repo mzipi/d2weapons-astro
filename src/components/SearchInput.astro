@@ -1,15 +1,11 @@
-<script>
-    export let onSearch;
-</script>
+---
+const { onSearch } = Astro.props;
+---
 
 <input
-    type="text"
-    id="search"
-    placeholder="Buscar arma por nombre o descripción"
-    required
-    onkeydown={(e) => {
-        if (e.key === "Enter") {
-            onSearch(e.target.value);
-        }
-    }}
+  type="text"
+  id="search"
+  placeholder="Buscar arma por ventajas"
+  required
+  on:keydown="(e) => onSearch(e)"
 />
