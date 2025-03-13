@@ -1,0 +1,44 @@
+<script>
+    export let weapons = [];
+</script>
+
+<div id="armas-container">
+    {weapons.length > 0 ? (
+        weapons.map((arma) => (
+            <div class="arma">
+                <div class="arma-image-container">
+                    <img src={`https://www.bungie.net${arma.displayProperties.icon}`} alt={arma.displayProperties.name} class="arma-icon" />
+                    {arma.iconWatermark && <img src={`https://www.bungie.net${arma.iconWatermark}`} alt="watermark" class="arma-watermark" />}
+                </div>
+                <strong>{arma.displayProperties.name}</strong><br />
+                <em>{arma.flavorText || "No hay descripción"}</em><br />
+                <h4>Perks:</h4>
+                <div class="sockets-container">
+                    {arma.sockets && arma.sockets.length > 1 ? (
+                        arma.sockets.slice(1, 5).map((socket, index) => (
+                            <div class="socket">
+                                <strong>Socket {index + 2} - {socket.itemTypeDisplayName || "Desconocido"}</strong>
+                                <ul>
+                                    {socket.perks.length > 0 ? (
+                                        socket.perks.map((perk) => (
+                                            <li>
+                                                {perk.icon && <img src={`https://www.bungie.net${perk.icon}`} alt={perk.name} width="30" />}
+                                                {perk.name}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li>No hay perks disponibles</li>
+                                    )}
+                                </ul>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No tiene sockets con perks aleatorios</p>
+                    )}
+                </div>
+            </div>
+        ))
+    ) : (
+        <p>No se encontraron armas.</p>
+    )}
+</div>

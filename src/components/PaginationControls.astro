@@ -1,0 +1,10 @@
+<script>
+    export let currentPage;
+    export let totalPages;
+    export let onPageChange;
+</script>
+
+<div id="buttons-container" style={`display: ${totalPages > 1 ? "block" : "none"};`}>
+    <button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>Anterior</button>
+    <button disabled={currentPage >= totalPages} onClick={() => onPageChange(currentPage + 1)}>Siguiente</button>
+</div>

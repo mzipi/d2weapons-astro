@@ -1,0 +1,15 @@
+<script>
+    export let onSearch;
+</script>
+
+<input
+    type="text"
+    id="search"
+    placeholder="Buscar arma por nombre o descripción"
+    required
+    onkeydown={(e) => {
+        if (e.key === "Enter") {
+            onSearch(e.target.value);
+        }
+    }}
+/>
