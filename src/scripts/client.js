@@ -119,14 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                 .map((socket, index) => {
                                     return `
                                     <div class="socket">
-                                        <strong>Socket ${index + 2} - ${socket.itemTypeDisplayName || "Desconocido"}</strong>
+                                        <strong>${socket.itemTypeDisplayName || "Desconocido"}</strong>
                                         <ul>
                                             ${socket.perks.length > 0
                                             ? socket.perks
                                                 .map(
                                                     (perk) => `
                                                             <li>
-                                                                ${perk.icon ? `<img src="https://www.bungie.net${perk.icon}" alt="${perk.name}" width="30">` : ""}
+                                                                ${perk.icon ? `<img src="https://www.bungie.net${perk.icon}" alt="${perk.name}">` : ""}
                                                                 ${perk.name}
                                                             </li>
                                                         `,

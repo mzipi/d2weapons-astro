@@ -50,7 +50,6 @@ const { weapons = [], loading } = Astro.props;
                                                             <img
                                                                 src={`https://www.bungie.net${perk.icon}`}
                                                                 alt={perk.name}
-                                                                width="30"
                                                             />
                                                         )}
                                                         {perk.name}
@@ -69,8 +68,6 @@ const { weapons = [], loading } = Astro.props;
                     </div>
                 </div>
             ))
-        ) : (
-            <p>No se encontraron armas.</p>
-        )
+        ) : null
     }
 </div>

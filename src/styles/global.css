@@ -1,6 +1,15 @@
 body {
-    background-color: #121212;
+    background-color: rgb(22, 22, 22);
     color: #e0e0e0;
+    font-family: neue-haas-grotesk-text, "Neue Haas Grotesk Text", "Neue Arial Grotesk", Arial, sans-serif, Destiny_Keys, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 14px;
 }
 
 .sockets-container {
@@ -11,7 +20,14 @@ body {
 
 .weapon-image-container {
     position: relative;
+    width: 48px;
+    height: 48px;
+    background-color: rgb(204, 204, 204);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .weapon-watermark {
     position: absolute;
@@ -19,7 +35,41 @@ body {
     left: 0;
 }
 
+.weapon-icon {
+    width: 46px;
+}
+
+.weapon-watermark {
+    width: 46px;
+}
+
 .socket ul {
     list-style: none;
     padding-left: 0;
+}
+
+.socket img {
+    width: 36px;
+}
+
+#search {
+    background-color:  rgb(28, 28, 28);
+    box-sizing: border-box;
+    border-color: rgb(52, 52, 52);
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 0.8px;
+    color: rgb(112, 112, 112);
+    width: 320px;
+    height: 36px;
+    padding: 8px;
+}
+
+#search:hover {
+    border-color: #0954a5;
+}
+
+#search:focus-visible {
+    border-width: 1px;
+    border-color: #0954a5;
 }
