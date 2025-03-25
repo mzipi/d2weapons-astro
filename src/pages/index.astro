@@ -1,17 +1,8 @@
 ---
-import WeaponsContainer from "../components/WeaponsContainer.astro";
-import LoadingMessage from "../components/LoadingMessage.astro";
-import PaginationButtons from "../components/PaginationButtons.astro";
+import WeaponsSearch from "../components/WeaponsSearch.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-    <WeaponsContainer id="weapons-container" />
-    <LoadingMessage id="loading-message" />
-    <PaginationButtons
-        id="pagination-buttons"
-        currentPage={0}
-        totalPages={0}
-        onPageChange={(page) => fetchWeapons(page)}
-    />
+    <WeaponsSearch />
 </Layout>

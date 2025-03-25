@@ -1,10 +1,10 @@
-export const ammoTypeMap = {
-    0: "None",
-    1: "Principal",
-    2: "Especial",
-    3: "Pesada",
-    4: "Desconocida"
-};
+// export const ammoTypeMap = {
+//     0: "None",
+//     1: "Principal",
+//     2: "Especial",
+//     3: "Pesada",
+//     4: "Desconocida"
+// };
 
 export default async function getManifestUrls() {
     try {
@@ -24,17 +24,17 @@ export default async function getManifestUrls() {
         
         // Definiciones requeridas
         const definitions = [
-            'DestinyDamageTypeDefinition',
-            'DestinyEquipmentSlotDefinition',
-            'DestinyBreakerTypeDefinition',
+            // 'DestinyDamageTypeDefinition',
+            // 'DestinyEquipmentSlotDefinition',
+            // 'DestinyBreakerTypeDefinition',
             'DestinyInventoryItemDefinition',
-            'DestinyPresentationNodeDefinition',
-            'DestinyStatDefinition',
+            // 'DestinyPresentationNodeDefinition',
+            // 'DestinyStatDefinition',
             'DestinyPlugSetDefinition',
-            'DestinySandboxPerkDefinition',
-            'DestinyCollectibleDefinition',
-            'DestinyRewardSourceDefinition',
-            'DestinySeasonDefinition'
+            // 'DestinySandboxPerkDefinition',
+            // 'DestinyCollectibleDefinition',
+            // 'DestinyRewardSourceDefinition',
+            // 'DestinySeasonDefinition'
         ];
         
         // Construir URLs de las definiciones

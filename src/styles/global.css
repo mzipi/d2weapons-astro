@@ -54,7 +54,7 @@ p {
 }
 
 #search {
-    background-color:  rgb(28, 28, 28);
+    background-color: rgb(28, 28, 28);
     box-sizing: border-box;
     border-color: rgb(52, 52, 52);
     border-radius: 8px;
@@ -73,4 +73,25 @@ p {
 #search:focus-visible {
     border-width: 1px;
     border-color: #0954a5;
+}
+
+.perk {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    top: -100%;
+    left: 100%;
+    background-color: black;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.perk:hover .tooltip {
+    display: block;
 }

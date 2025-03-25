@@ -10,16 +10,18 @@ async function loadManifest() {
 
         if (!urls) throw new Error("No se pudieron obtener las URLs del manifiesto.");
 
-        const [items, perks, collectibles, sources, seasons, plugSets] = await Promise.all([
+        // const [items, perks, collectibles, sources, seasons, plugSets] = await Promise.all([
+        const [items, plugSets] = await Promise.all([
             fetch(urls.DestinyInventoryItemDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyInventoryItemDefinition") }),
-            fetch(urls.DestinySandboxPerkDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinySandboxPerkDefinition") }),
-            fetch(urls.DestinyCollectibleDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyCollectibleDefinition") }),
-            fetch(urls.DestinyRewardSourceDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyRewardSourceDefinition") }),
-            fetch(urls.DestinySeasonDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinySeasonDefinition") }),
+            // fetch(urls.DestinySandboxPerkDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinySandboxPerkDefinition") }),
+            // fetch(urls.DestinyCollectibleDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyCollectibleDefinition") }),
+            // fetch(urls.DestinyRewardSourceDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyRewardSourceDefinition") }),
+            // fetch(urls.DestinySeasonDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinySeasonDefinition") }),
             fetch(urls.DestinyPlugSetDefinition).then(res => res.json()).catch(() => { throw new Error("Error al cargar DestinyPlugSetDefinition") }),
         ]);
 
-        manifestCache = { items, perks, collectibles, sources, seasons, plugSets };
+        manifestCache = { items, plugSets };
+        // manifestCache = { items, perks, collectibles, sources, seasons, plugSets };
         return manifestCache;
     } catch (error) {
         console.error("Error en la carga del manifiesto:", error);
@@ -55,6 +57,9 @@ export async function POST(context) {
                     if (!socket.randomizedPlugSetHash) return false;
 
                     const plugSet = plugSets[socket.randomizedPlugSetHash];
+
+                    console.log("plugSet: ", plugSet);
+                    
                     if (!plugSet) return false;
 
                     return plugSet.reusablePlugItems.some(plug => plug.plugItemHash === perkHash);
@@ -69,7 +74,7 @@ export async function POST(context) {
             const sockets = [];
 
             if (weapon.sockets?.socketEntries) {
-                const filteredSockets = [0, 1, 2, 3, 4, 6, 8]
+                const filteredSockets = [0, 1, 2, 3, 4, 8]
                     .map(index => weapon.sockets.socketEntries[index])
                     .filter(socket => socket !== undefined);
 
@@ -88,7 +93,8 @@ export async function POST(context) {
                                     return plugItem ? {
                                         name: plugItem.displayProperties.name,
                                         icon: plugItem.displayProperties.icon,
-                                        itemTypeDisplayName: plugItem.itemTypeDisplayName
+                                        itemTypeDisplayName: plugItem.itemTypeDisplayName,
+                                        description: plugItem.displayProperties.description
                                     } : null;
                                 }).filter(perk => perk !== null);
 
