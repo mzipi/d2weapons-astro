@@ -2,12 +2,10 @@
 import WeaponsContainer from "../components/WeaponsContainer.astro";
 import LoadingMessage from "../components/LoadingMessage.astro";
 import PaginationButtons from "../components/PaginationButtons.astro";
-import SearchInput from "../components/SearchInput.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-    <SearchInput id="search-input" />
     <WeaponsContainer id="weapons-container" />
     <LoadingMessage id="loading-message" />
     <PaginationButtons
