@@ -32,65 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     async function fetchWeapons(searchTerm) {
-        weaponsContainer.innerHTML = "";
-
-        const query = `
-            query ($searchTerm: String!, $page: Int!, $resultsPerPage: Int!) {
-                weapons(search: $searchTerm, page: $page, resultsPerPage: $resultsPerPage) {
-                    weapons {
-                        displayProperties {
-                            name
-                            icon
-                            description
-                            hasIcon
-                        }
-                        iconWatermark
-                        flavorText
-                        ammoTypeName
-                        damageTypeIcon
-                        itemSubType
-                        equipmentSlotName
-                        stats {
-                            statName
-                            value
-                        }
-                        breakerTypeIcon
-                        sockets {
-                            itemTypeDisplayName
-                            perks {
-                                name
-                                icon
-                                itemTypeDisplayName
-                            }
-                        }
-                    }
-                    totalPages
-                    currentPage
-                }
-            }
-        `;
-
-        const variables = {
-            searchTerm: searchTerm,
-            page: currentPage,
-            resultsPerPage: 1, // Establecemos que quieres 1 resultado por página
-        };
-
         try {
-            const response = await fetch('/api/graphql', {
+            const response = await fetch('/api/weaponsByPerk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    query: query,
-                    variables: variables,
-                }),
+                body: JSON.stringify({ perk: searchTerm }),
             });
 
             const data = await response.json();
-            const weapons = data.data.weapons.weapons;
-            totalPages = data.data.weapons.totalPages;
+            const weapons = data.weapons;
+            totalPages = data.totalPages;
 
             weaponsContainer.innerHTML = "";
 
@@ -98,42 +51,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 weapons.forEach((weapon) => {
                     const div = document.createElement("div");
                     div.classList.add("weapon");
-
-                    const iconUrl = `https://www.bungie.net${weapon.displayProperties.icon}`;
-                    const watermarkUrl = weapon.iconWatermark
-                        ? `https://www.bungie.net${weapon.iconWatermark}`
-                        : "";
-
                     div.innerHTML = `
                     <div class="weapon-image-container">
-                        <img src="${iconUrl}" alt="${weapon.displayProperties.name}" class="weapon-icon">
-                        ${watermarkUrl ? `<img src="${watermarkUrl}" alt="watermark" class="weapon-watermark">` : ""}
+                        <img src="${weapon.icon}" alt="${weapon.name}" class="weapon-icon">
+                        ${weapon.iconWatermark ? `<img src="${weapon.iconWatermark}" alt="watermark" class="weapon-watermark">` : ""}
                     </div>
-                    <strong>${weapon.displayProperties.name}</strong><br>
+                    <strong>${weapon.name}</strong><br>
                     <em>${weapon.flavorText || "No hay descripción"}</em><br>
                     <h4>Perks:</h4>
                     <div class="sockets-container">
-                    ${weapon.sockets && weapon.sockets.length > 1
-                            ? [...weapon.sockets.slice(1, 5), weapon.sockets[7]]
-                                .filter(Boolean)
+                        ${weapon.sockets && weapon.sockets.length > 0
+                            ? weapon.sockets
                                 .map((socket, index) => {
                                     return `
                                     <div class="socket">
                                         <strong>${socket.itemTypeDisplayName || "Desconocido"}</strong>
                                         <ul>
                                             ${socket.perks.length > 0
-                                            ? socket.perks
-                                                .map(
-                                                    (perk) => `
-                                                            <li>
-                                                                ${perk.icon ? `<img src="https://www.bungie.net${perk.icon}" alt="${perk.name}">` : ""}
-                                                                ${perk.name}
-                                                            </li>
-                                                        `,
-                                                )
-                                                .join("")
-                                            : "<li>No hay perks disponibles</li>"
-                                        }
+                                                ? socket.perks
+                                                    .map(
+                                                        (perk) => `
+                                                        <li>
+                                                            ${perk.icon ? `<img src="https://www.bungie.net${perk.icon}" alt="${perk.name}" title="${perk.name}">` : ""}
+                                                        </li>
+                                                    `,
+                                                    )
+                                                    .join("")
+                                                : "<li>No hay perks disponibles</li>"
+                                            }
                                         </ul>
                                     </div>
                                 `;
@@ -144,14 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                     `;
                     weaponsContainer.appendChild(div);
-
-                    console.log(`weapon: ${weapon.displayProperties.name}`);
-                    weapon.sockets.forEach((socket, index) => {
-                        console.log(`Socket ${index + 1}: ${socket.itemTypeDisplayName || "Desconocido"}`);
-                        socket.perks.forEach((perk) => {
-                            console.log(`- Perk: ${perk.name} ${perk.icon ? `, Icono: ${perk.icon}` : ""}`);
-                        });
-                    });
                 });
             } else {
                 weaponsContainer.innerHTML = "<p>No se encontraron armas.</p>";

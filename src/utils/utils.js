@@ -30,7 +30,11 @@ export default async function getManifestUrls() {
             'DestinyInventoryItemDefinition',
             'DestinyPresentationNodeDefinition',
             'DestinyStatDefinition',
-            'DestinyPlugSetDefinition'
+            'DestinyPlugSetDefinition',
+            'DestinySandboxPerkDefinition',
+            'DestinyCollectibleDefinition',
+            'DestinyRewardSourceDefinition',
+            'DestinySeasonDefinition'
         ];
         
         // Construir URLs de las definiciones

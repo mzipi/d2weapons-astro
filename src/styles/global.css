@@ -14,8 +14,9 @@ p {
 
 .sockets-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
+    justify-items: center;
 }
 
 .weapon-image-container {
@@ -27,7 +28,6 @@ p {
     align-items: center;
     justify-content: center;
 }
-
 
 .weapon-watermark {
     position: absolute;
@@ -46,6 +46,7 @@ p {
 .socket ul {
     list-style: none;
     padding-left: 0;
+    justify-items: center;
 }
 
 .socket img {
