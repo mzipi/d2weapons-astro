@@ -58,8 +58,6 @@ export async function POST(context) {
 
                     const plugSet = plugSets[socket.randomizedPlugSetHash];
 
-                    console.log("plugSet: ", plugSet);
-                    
                     if (!plugSet) return false;
 
                     return plugSet.reusablePlugItems.some(plug => plug.plugItemHash === perkHash);
