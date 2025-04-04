@@ -51,26 +51,27 @@ p {
 
 .socket img {
     width: 36px;
+    height: auto;
 }
 
-#search {
+.search {
     background-color: rgb(28, 28, 28);
     box-sizing: border-box;
     border-color: rgb(52, 52, 52);
     border-radius: 8px;
     border-style: solid;
     border-width: 0.8px;
-    color: rgb(112, 112, 112);
+    color: white;
     width: 320px;
     height: 36px;
     padding: 8px;
 }
 
-#search:hover {
+.search:hover {
     border-color: #0954a5;
 }
 
-#search:focus-visible {
+.search:focus-visible {
     border-width: 1px;
     border-color: #0954a5;
 }
@@ -94,4 +95,46 @@ p {
 
 .perk:hover .tooltip {
     display: block;
+}
+
+.highlighted-perk > img {
+    border-radius: 50%;
+    border: 1px solid #369eff;
+    background-color: #0a4481;
+    padding: 5px;
+    font-weight: bold;
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    background-color: #0091ff;
+    border: 1px solid transparent;
+    color: white;
+    cursor: pointer;
+    padding: 0 16px;
+    height: 30px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#weapon-container {
+    height: 900px;
+}
+
+#search-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
