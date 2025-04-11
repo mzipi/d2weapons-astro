@@ -3,6 +3,9 @@ import { Image } from "astro:assets";
 import WeaponSockets from "./WeaponSockets.astro";
 
 const { weapon } = Astro.props;
+
+console.log(weapon);
+
 ---
 
 <div>
@@ -12,29 +15,33 @@ const { weapon } = Astro.props;
         {
             weapon.collectible ? (
                 weapon.collectible.displayProperties.icon && (
+                <div class="weapon-image-container">
                     <Image
                         src={`https://bungie.net${weapon.collectible.displayProperties.icon}`}
                         alt={weapon.weapon.displayProperties.name}
                         width="46"
                         height="46"
                     />
+                </div>
                 )
             ) : (
                 <div class="weapon-image-container">
-                    {weapon.displayProperties && (
+                    {weapon.weapon.displayProperties && (
                         <Image
-                            src={`https://bungie.net${weapon.displayProperties.icon}`}
+                            src={`https://bungie.net${weapon.weapon.displayProperties.icon}`}
                             alt={weapon.weapon.displayProperties.name}
                             width="46"
                             height="46"
+                            class="weapon-icon"
                         />
                     )}
-                    {weapon.iconWatermark && (
+                    {weapon.weapon.iconWatermark && (
                         <Image
-                            src={`https://bungie.net${weapon.iconWatermark}`}
+                            src={`https://bungie.net${weapon.weapon.iconWatermark}`}
                             alt="Watermark"
                             width="46"
                             height="46"
+                            class="weapon-watermark"
                         />
                     )}
                 </div>
@@ -48,6 +55,16 @@ const { weapon } = Astro.props;
             height="16"
         />
         <p>{weapon.equipmentSlot.displayProperties.name}</p>
+        {
+            weapon.weapon.secondaryIcon && (
+                <Image
+                    src={`https://bungie.net${weapon.weapon.secondaryIcon}`}
+                    alt={weapon.weapon.displayProperties.name}
+                    width="100"
+                    height="100"
+                />
+            )
+        }
         <!-- <Image
             src={`https://bungie.net${weapon.weapon.screenshot}`}
             alt={weapon.weapon.displayProperties.name}
