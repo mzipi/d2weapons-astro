@@ -129,12 +129,17 @@ button:disabled {
     opacity: 0.6;
 }
 
-#weapon-container {
-    height: 900px;
-}
-
 #search-container {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+.damageType {
+    height: 16px;
+    width: 16px;
+}
+
+.weapon-screenshot {
+    height: 180px;
 }

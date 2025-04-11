@@ -2,7 +2,21 @@
 
 ---
 <div id="search-container">
-    <input type="text" placeholder="Rasgo 1" class="search"/>
-    <input type="text" placeholder="Rasgo 2" class="search"/>
-    <button>Buscar</button>
+    <form method="GET">
+        <input
+            name="trait1"
+            type="text"
+            placeholder="Rasgo 1"
+            class="search"
+            required
+        />
+        <input
+            name="trait2"
+            type="text"
+            placeholder="Rasgo 2"
+            class="search"
+            required
+        />
+        <button>Buscar</button>
+    </form>
 </div>

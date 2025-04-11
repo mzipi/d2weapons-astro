@@ -1,17 +1,61 @@
 ---
+import { Image } from "astro:assets";
 import WeaponSockets from "./WeaponSockets.astro";
+
+const { weapon } = Astro.props;
 ---
 
 <div>
     <div id="weapon-container">
-        <div class="weapon-image-container">
-            <img src="" alt="icono del arma" class="weapon-icon">
-        </div>
-        <strong>Nombre del arma</strong>
-        <br>
-        <em>Descripción del arma</em>
-        <br>
-        <h4>Perks</h4>
-        <WeaponSockets />
+        <h2>{weapon.weapon.displayProperties.name}</h2>
+        <p>{weapon.weapon.flavorText}</p>
+        {
+            weapon.collectible ? (
+                weapon.collectible.displayProperties.icon && (
+                    <Image
+                        src={`https://bungie.net${weapon.collectible.displayProperties.icon}`}
+                        alt={weapon.weapon.displayProperties.name}
+                        width="46"
+                        height="46"
+                    />
+                )
+            ) : (
+                <div class="weapon-image-container">
+                    {weapon.displayProperties && (
+                        <Image
+                            src={`https://bungie.net${weapon.displayProperties.icon}`}
+                            alt={weapon.weapon.displayProperties.name}
+                            width="46"
+                            height="46"
+                        />
+                    )}
+                    {weapon.iconWatermark && (
+                        <Image
+                            src={`https://bungie.net${weapon.iconWatermark}`}
+                            alt="Watermark"
+                            width="46"
+                            height="46"
+                        />
+                    )}
+                </div>
+            )
+        }
+        <Image
+            src={`https://bungie.net${weapon.damageType.displayProperties.icon}`}
+            alt={weapon.damageType.displayProperties.name}
+            class="damageType"
+            width="16"
+            height="16"
+        />
+        <p>{weapon.equipmentSlot.displayProperties.name}</p>
+        <!-- <Image
+            src={`https://bungie.net${weapon.weapon.screenshot}`}
+            alt={weapon.weapon.displayProperties.name}
+            class="weapon-screenshot"
+            width="319"
+            height="180"
+        /> -->
+        <p>{weapon.weapon.itemTypeDisplayName}</p>
+        <!-- <WeaponSockets /> -->
     </div>
 </div>

@@ -1,12 +1,42 @@
 ---
-import SearchContainer from '../components/SearchContainer.astro';
-import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import SearchContainer from "../components/SearchContainer.astro";
+import WeaponsContainer from "../components/WeaponsContainer.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+export const prerender = false;
+
+let response;
+
+if (Astro.request.method === "GET") {
+    try {
+        const searchParams = Astro.url.searchParams;
+        const trait1 = searchParams.get("trait1");
+        const trait2 = searchParams.get("trait2");
+        const page = Number(searchParams.get("page") || 1);
+
+        const res = await fetch(`http://localhost:3000/api?trait1=${trait1}&trait2=${trait2}&page=${page}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        response = await res.json();
+
+        console.log(response);
+        
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
 ---
 
 <Layout>
-	<SearchContainer />
+    <div>
+        <SearchContainer />
+        <WeaponsContainer response={response} />
+    </div>
 </Layout>

@@ -1,0 +1,28 @@
+---
+import WeaponCard from "./WeaponCard.astro";
+import Pagination from "./Pagination.astro";
+
+const { response } = Astro.props;
+const weapons = response?.paginatedWeapons || {};
+const weaponKeys = Object.keys(weapons);
+
+const itemsPerPage = 1;
+const currentPage = Number(Astro.url.searchParams.get("page") || 1);
+const total = response?.total || 0;
+---
+
+<div>
+    {
+        weaponKeys.length > 0 ? (
+            weaponKeys.map((key) => <WeaponCard weapon={weapons[key]} />)
+        ) : (
+            <p>No se encontraron armas.</p>
+        )
+    }
+
+    <Pagination
+        total={total}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+    />
+</div>

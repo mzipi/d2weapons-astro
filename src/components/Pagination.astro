@@ -1,7 +1,32 @@
 ---
+const { total, currentPage, itemsPerPage } = Astro.props;
+const totalPages = Math.ceil(total / itemsPerPage);
+const prevPage = currentPage > 1 ? currentPage - 1 : null;
+const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
+const params = new URLSearchParams(Astro.url.searchParams);
 ---
 <div id="buttons-container">
-    <button>Anterior</button>
-    <button>Siguiente</button>
+    {
+        prevPage && (() => {
+            params.set("page", prevPage);
+            return (
+                <a href={`?${params.toString()}`}>
+                    <button>Anterior</button>
+                </a>
+            );
+        })()
+    }
+
+    {
+        nextPage && (() => {
+            params.set("page", nextPage);
+            return (
+                <a href={`?${params.toString()}`}>
+                    <button>Siguiente</button>
+                </a>
+            );
+        })()
+    }
 </div>
+
