@@ -23,9 +23,6 @@ if (Astro.request.method === "GET") {
         });
 
         response = await res.json();
-
-        console.log(response);
-        
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
