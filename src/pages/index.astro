@@ -6,7 +6,7 @@ import WeaponsContainer from "../components/WeaponsContainer.astro";
 
 export const prerender = false;
 
-let response;
+let response = null;
 
 if (Astro.request.method === "GET") {
     try {
@@ -15,17 +15,26 @@ if (Astro.request.method === "GET") {
         const trait2 = searchParams.get("trait2");
         const page = Number(searchParams.get("page") || 1);
 
-        const res = await fetch(`http://localhost:3000/api?trait1=${trait1}&trait2=${trait2}&page=${page}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
+        if (!trait1 || !trait2) {
+            response = { paginatedWeapons: {}, total: 0 };
+        } else {
+            const res = await fetch(`http://localhost:3000/api?trait1=${trait1}&trait2=${trait2}&page=${page}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
 
-        response = await res.json();
+            if (res.ok) {
+                response = await res.json();
+            } else {
+                response = { paginatedWeapons: {}, total: 0 };
+            }
+        }
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
+            response = { paginatedWeapons: {}, total: 0 };
         }
     }
 }

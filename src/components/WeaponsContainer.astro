@@ -9,20 +9,31 @@ const weaponKeys = Object.keys(weapons);
 const itemsPerPage = 1;
 const currentPage = Number(Astro.url.searchParams.get("page") || 1);
 const total = response?.total || 0;
+
+const trait1 = Astro.url.searchParams.get("trait1");
+const trait2 = Astro.url.searchParams.get("trait2");
+
+const noSearchYet = !trait1 || !trait2;
 ---
 
 <div>
     {
-        weaponKeys.length > 0 ? (
-            weaponKeys.map((key) => <WeaponCard weapon={weapons[key]} />)
-        ) : (
-            <p>No se encontraron armas.</p>
+        noSearchYet ? null : (
+            weaponKeys.length > 0 ? (
+                weaponKeys.map((key) => <WeaponCard weapon={weapons[key]} />)
+            ) : (
+                <p>No se encontraron armas.</p>
+            )
         )
     }
 
-    <Pagination
-        total={total}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-    />
+    {
+        !noSearchYet && (
+            <Pagination
+                total={total}
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+            />
+        )
+    }
 </div>
