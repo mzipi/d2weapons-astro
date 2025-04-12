@@ -1,16 +1,11 @@
 ---
-import Perks from "./Perks.astro";
+import PerksSockets from "./PerksSockets.astro";
+import ModsSockets from "./ModsSockets.astro";
+
 const { sockets } = Astro.props;
 ---
 
 <div class="sockets">
-    {
-        sockets.map((perks, index) => (
-            <div key={index} class="perk-type">
-                {perks.map((perk) => (
-                    <Perks perk={perk} />
-                ))}
-            </div>
-        ))
-    }
+    <PerksSockets perks={sockets.perks} />
+    <ModsSockets mods={sockets.mods} />
 </div>

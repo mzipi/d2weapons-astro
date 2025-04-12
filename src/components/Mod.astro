@@ -1,0 +1,16 @@
+---
+import Image from "astro/components/Image.astro";
+const { mod } = Astro.props;
+---
+
+<div class="mod">
+    <div class="mod-image">
+        <Image
+            src={`https://www.bungie.net${mod.displayProperties.icon}`}
+            alt={mod.displayProperties.name}
+            width="64"
+            height="64"
+        />
+    </div>
+    <span>{mod.displayProperties.name}</span>
+</div>

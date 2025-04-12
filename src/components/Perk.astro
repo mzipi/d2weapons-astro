@@ -2,11 +2,11 @@
 import Image from "astro/components/Image.astro"
 
 const { perk } = Astro.props
-const isTier3 = perk.wrappedInDiv === true
+const className = perk.className || 'perk-image';
 ---
 
-<div>
-    <div class={isTier3 ? 'rasgo-mejorado' : 'rasgo'}>
+<div class="perk">
+    <div class={className}>
         <Image
             src={`https://www.bungie.net${perk.displayProperties.icon}`}
             alt={perk.displayProperties.name}
