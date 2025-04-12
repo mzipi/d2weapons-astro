@@ -1,0 +1,18 @@
+---
+import Image from "astro/components/Image.astro"
+
+const { perk } = Astro.props
+const isTier3 = perk.wrappedInDiv === true
+---
+
+<div>
+    <div class={isTier3 ? 'rasgo-mejorado' : 'rasgo'}>
+        <Image
+            src={`https://www.bungie.net${perk.displayProperties.icon}`}
+            alt={perk.displayProperties.name}
+            width="32"
+            height="32"
+        />
+    </div>
+    <span>{perk.displayProperties.name}</span>
+</div>

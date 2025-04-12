@@ -1,0 +1,16 @@
+---
+import Perks from "./Perks.astro";
+const { sockets } = Astro.props;
+---
+
+<div class="sockets">
+    {
+        sockets.map((perks, index) => (
+            <div key={index} class="perk-type">
+                {perks.map((perk) => (
+                    <Perks perk={perk} />
+                ))}
+            </div>
+        ))
+    }
+</div>
