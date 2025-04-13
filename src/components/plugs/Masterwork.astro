@@ -1,0 +1,18 @@
+---
+const { masterwork } = Astro.props;
+---
+
+<div class="masterwork">
+    <div class="masterwork-icon">
+        <img 
+            src={`https://www.bungie.net${masterwork.displayProperties.icon}`} 
+            alt={masterwork.displayProperties.name} 
+            width="64" 
+            height="64" 
+        />
+    </div>
+    <div class="masterwork-info">
+        <h4>{masterwork.displayProperties.name}</h4>
+        <p>{masterwork.displayProperties.description}</p>
+    </div>
+</div>

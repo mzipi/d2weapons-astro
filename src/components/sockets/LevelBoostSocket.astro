@@ -1,0 +1,16 @@
+---
+import LevelBoost from "../plugs/LevelBoost.astro";
+const { levelBoost } = Astro.props;
+---
+
+<div class="sockets-levelboost">
+    {
+        levelBoost.map((boost, index) => (
+            <div key={`levelboost-${index}`} class="levelboost-item">
+                {boost.map((perk) => (
+                    <LevelBoost levelBoost={perk} />
+                ))}
+            </div>
+        ))
+    }
+</div>

@@ -1,0 +1,16 @@
+---
+import Deepsight from "../plugs/Deepsight.astro";
+const { deepsight } = Astro.props;
+---
+
+<div class="sockets-deepsight">
+    {
+        deepsight.map((deepsightItem, index) => (
+            <div key={`deepsight-${index}`} class="deepsight-item">
+                {deepsightItem.map((perk) => (
+                    <Deepsight deepsight={perk} />
+                ))}
+            </div>
+        ))
+    }
+</div>

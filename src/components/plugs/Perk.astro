@@ -1,0 +1,18 @@
+---
+const { perk } = Astro.props;
+---
+
+<div class="perk">
+    <div class="perk-icon">
+        <img 
+            src={`https://www.bungie.net${perk.displayProperties.icon}`} 
+            alt={perk.displayProperties.name} 
+            width="64" 
+            height="64" 
+        />
+    </div>
+    <div class="perk-info">
+        <h4>{perk.displayProperties.name}</h4>
+        <p>{perk.displayProperties.description}</p>
+    </div>
+</div>

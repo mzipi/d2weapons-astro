@@ -1,0 +1,16 @@
+---
+import Intrinsic from "../plugs/Intrinsic.astro";
+const { intrinsic } = Astro.props;
+---
+
+<div class="sockets-intrinsic">
+    {
+        intrinsic.map((intrinsicItem, index) => (
+            <div key={`intrinsic-${index}`} class="intrinsic-item">
+                {intrinsicItem.map((intrinsicItem) => (
+                    <Intrinsic intrinsic={intrinsicItem} />
+                ))}
+            </div>
+        ))
+    }
+</div>

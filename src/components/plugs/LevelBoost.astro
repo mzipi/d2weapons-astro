@@ -1,0 +1,17 @@
+---
+const { levelBoost } = Astro.props;
+---
+<div class="levelboost">
+    <div class="levelboost-icon">
+        <img 
+            src={`https://www.bungie.net${levelBoost.displayProperties.icon}`} 
+            alt={levelBoost.displayProperties.name} 
+            width="64" 
+            height="64" 
+        />
+    </div>
+    <div class="levelboost-info">
+        <h4>{levelBoost.displayProperties.name}</h4>
+        <p>{levelBoost.displayProperties.description}</p>
+    </div>
+</div>

@@ -1,11 +1,19 @@
 ---
-import PerksSockets from "./PerksSockets.astro";
-import ModsSockets from "./ModsSockets.astro";
+import PerksSocket from "./sockets/PerksSocket.astro";
+import ModsSocket from "./sockets/ModsSocket.astro";
+import MasterworksSocket from "./sockets/MasterworksSocket.astro";
+import IntrinsicSocket from "./sockets/IntrinsicSocket.astro";
+import DeepsightSocket from "./sockets/DeepsightSocket.astro";
+import LevelBoostSocket from "./sockets/LevelBoostSocket.astro";
 
 const { sockets } = Astro.props;
 ---
 
 <div class="sockets">
-    <PerksSockets perks={sockets.perks} />
-    <ModsSockets mods={sockets.mods} />
+    {sockets.perks && <PerksSocket perks={sockets.perks} />}
+    {sockets.mods && <ModsSocket mods={sockets.mods} />}
+    {sockets.masterworks && <MasterworksSocket masterworks={sockets.masterworks} />}
+    {sockets.intrinsic && <IntrinsicSocket intrinsic={sockets.intrinsic} />}
+    {sockets.deepsight && <DeepsightSocket deepsight={sockets.deepsight} />}
+    {sockets.levelBoost && <LevelBoostSocket levelBoost={sockets.levelBoost} />}
 </div>

@@ -1,0 +1,16 @@
+---
+import Masterwork from "../plugs/Masterwork.astro";
+const { masterworks } = Astro.props;
+---
+
+<div class="sockets-masterworks">
+    {
+        masterworks.map((masterwork, index) => (
+            <div key={`masterwork-${index}`} class="masterwork-item">
+                {masterwork.map((mod) => (
+                    <Masterwork masterwork={mod} />
+                ))}
+            </div>
+        ))
+    }
+</div>
