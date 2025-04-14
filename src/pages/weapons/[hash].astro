@@ -1,0 +1,43 @@
+---
+import "../../styles/global.css";
+import Layout from "../../layouts/Layout.astro";
+import SearchContainer from "../../components/SearchContainer.astro";
+import WeaponCard from "../../components/WeaponCard.astro";
+
+const { hash } = Astro.params;
+
+let response = null;
+
+if (Astro.request.method === "GET") {
+    try {
+        const res = await fetch(`http://localhost:3000/api/weapons/${hash}`);
+
+        if (res.ok) {
+            response = await res.json();
+        } else {
+            const errorBody = await res.text();
+            response = {
+                error: "Search failed",
+                status: res.status,
+                statusText: res.statusText,
+                message: `The search request returned status ${res.status}.`,
+                body: errorBody,
+            };
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            response = {
+                error: "Unexpected error",
+                message: error.message,
+            };
+        }
+    }
+}
+
+const isValidResponse = response && !response.error && Object.keys(response).length > 0;
+---
+
+<Layout>
+    <SearchContainer />
+    {isValidResponse && <WeaponCard response={response} />}
+</Layout>

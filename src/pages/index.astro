@@ -1,47 +1,68 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
 import SearchContainer from "../components/SearchContainer.astro";
-import WeaponsContainer from "../components/WeaponsContainer.astro";
+import ResultsContainer from "../components/ResultsContainer.astro";
 
 export const prerender = false;
 
 let response = null;
 
-if (Astro.request.method === "GET") {
+if (Astro.request.method === "POST") {
     try {
-        const searchParams = Astro.url.searchParams;
-        const trait1 = searchParams.get("trait1");
-        const trait2 = searchParams.get("trait2");
-        const page = Number(searchParams.get("page") || 1);
+        const data = await Astro.request.formData();
+        const trait1 = data.get("trait1");
+        const trait2 = data.get("trait2");
 
         if (!trait1 || !trait2) {
-            response = { total: 0, paginatedWeapons: {} };
+            response = {
+                error: "Missing traits",
+                message: "Both trait1 and trait2 are required.",
+            };
         } else {
-            const res = await fetch(`http://localhost:3000/api?trait1=${trait1}&trait2=${trait2}&page=${page}`, {
-                method: "GET",
+            const res = await fetch("http://localhost:3000/api/search", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                }
+                },
+                body: JSON.stringify({
+                    trait1: `${trait1}`,
+                    trait2: `${trait2}`,
+                }),
             });
-
             if (res.ok) {
                 response = await res.json();
             } else {
-                response = { total: 0, paginatedWeapons: {} };
+                const errorBody = await res.text();
+                response = {
+                    error: "Search failed",
+                    status: res.status,
+                    statusText: res.statusText,
+                    message: `The search request returned status ${res.status}.`,
+                    body: errorBody,
+                };
             }
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.error(error.message);
-            response = { total: 0, paginatedWeapons: {} };
+            response = {
+                error: "Unexpected error",
+                message: error.message,
+            };
         }
     }
 }
 ---
+
 <Layout>
-    <div>
-        <SearchContainer />
-        <WeaponsContainer response={response} />
-    </div>
+    <SearchContainer />
+    {response && <ResultsContainer response={response} />}
 </Layout>
+
+<script>
+    fetch("http://localhost:3000/api/definitions")
+        .then(() => console.log("Definiciones cargadas en el servidor"))
+        .catch((err) =>
+            console.error("Error al inicializar definiciones", err),
+        );
+</script>

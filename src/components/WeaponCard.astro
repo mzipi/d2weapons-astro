@@ -3,18 +3,19 @@ import { Image } from "astro:assets";
 import Stats from "./Stats.astro";
 import Sockets from "./Sockets.astro";
 
-const { weapon } = Astro.props;
+const { response } = Astro.props;
 ---
 
+<!-- <pre>{JSON.stringify(response, null, 2)}</pre> -->
 <div id="weapon-container">
     <div class="weapon-data">
         {
-            weapon.collectible ? (
-                weapon.collectible.displayProperties.icon && (
+            response.collectible ? (
+                response.collectible.displayProperties.icon && (
                     <div class="weapon-image-container">
                         <Image
-                            src={`https://bungie.net${weapon.collectible.displayProperties.icon}`}
-                            alt={weapon.weapon.displayProperties.name}
+                            src={`https://bungie.net${response.collectible.displayProperties.icon}`}
+                            alt={response.weapon.displayProperties.name}
                             width="46"
                             height="46"
                         />
@@ -22,18 +23,18 @@ const { weapon } = Astro.props;
                 )
             ) : (
                 <div class="weapon-image-container">
-                    {weapon.weapon.displayProperties && (
+                    {response.weapon.displayProperties && (
                         <Image
-                            src={`https://bungie.net${weapon.weapon.displayProperties.icon}`}
-                            alt={weapon.weapon.displayProperties.name}
+                            src={`https://bungie.net${response.weapon.displayProperties.icon}`}
+                            alt={response.weapon.displayProperties.name}
                             width="46"
                             height="46"
                             class="weapon-icon"
                         />
                     )}
-                    {weapon.weapon.iconWatermark && (
+                    {response.weapon.iconWatermark && (
                         <Image
-                            src={`https://bungie.net${weapon.weapon.iconWatermark}`}
+                            src={`https://bungie.net${response.weapon.iconWatermark}`}
                             alt="Watermark"
                             width="46"
                             height="46"
@@ -45,67 +46,67 @@ const { weapon } = Astro.props;
         }
         <div class="weapon-tooltip">
             <span class="weapon-tooltip-info">
-                <h2>{weapon.weapon.displayProperties.name}</h2>
-                <p>{weapon.weapon.flavorText}</p>
-                <p>Tipo de arma: {weapon.weapon.itemTypeDisplayName}</p>
-                <p>Slot: {weapon.equipmentSlot.displayProperties.name}</p>
+                <h2>{response.weapon.displayProperties.name}</h2>
+                <p>{response.weapon.flavorText}</p>
+                <p>Tipo de arma: {response.weapon.itemTypeDisplayName}</p>
+                <p>Slot: {response.equipmentSlot.displayProperties.name}</p>
                 {
-                    weapon.breakerType && (
-                        <p>{weapon.breakerType.displayProperties.icon}</p>
+                    response.breakerType && (
+                        <p>{response.breakerType.displayProperties.icon}</p>
                     )
                 }
-                {weapon.collectible && <p>{weapon.collectible.sourceString}</p>}
+                {response.collectible && <p>{response.collectible.sourceString}</p>}
             </span>
         </div>
     </div>
     <div class="ammo">
         <Image
-            src={`https://bungie.net${weapon.ammo.displayProperties.icon}`}
-            alt={weapon.ammo.displayProperties.name}
+            src={`https://bungie.net${response.ammo.displayProperties.icon}`}
+            alt={response.ammo.displayProperties.name}
             width="64"
             height="64"
         />
         <div class="ammo-tooltip">
             <span class="ammo-tooltip-info">
-                <p>{weapon.ammo.displayProperties.name}</p>
-                <p>{weapon.ammo.displayProperties.description}</p>
+                <p>{response.ammo.displayProperties.name}</p>
+                <p>{response.ammo.displayProperties.description}</p>
             </span>
         </div>
     </div>
     <div class="damage">
         <Image
-            src={`https://bungie.net${weapon.damageType.displayProperties.icon}`}
-            alt={weapon.damageType.displayProperties.name}
+            src={`https://bungie.net${response.damageType.displayProperties.icon}`}
+            alt={response.damageType.displayProperties.name}
             class="damageType"
             width="32"
             height="32"
         />
         <div class="damage-tooltip">
             <span class="damage-tooltip-info">
-                <p>{weapon.damageType.displayProperties.name}</p>
-                <p>{weapon.damageType.displayProperties.description}</p>
+                <p>{response.damageType.displayProperties.name}</p>
+                <p>{response.damageType.displayProperties.description}</p>
             </span>
         </div>
     </div>
     {
-        weapon.weapon.secondaryIcon && (
+        response.weapon.secondaryIcon && (
             <Image
-                src={`https://bungie.net${weapon.weapon.secondaryIcon}`}
-                alt={weapon.weapon.displayProperties.name}
+                src={`https://bungie.net${response.weapon.secondaryIcon}`}
+                alt={response.weapon.displayProperties.name}
                 width="200"
                 height="200"
             />
         )
     }
-    <!-- <div>
+    <div>
         <Image
-            src={`https://bungie.net${weapon.weapon.screenshot}`}
-            alt={weapon.weapon.displayProperties.name}
+            src={`https://bungie.net${response.weapon.screenshot}`}
+            alt={response.weapon.displayProperties.name}
             class="weapon-screenshot"
             width="319"
             height="180"
         />
-    </div> -->
-    <Sockets sockets={weapon.sockets} />
-    <Stats stats={weapon.stats} />
+    </div>
+    <Sockets sockets={response.sockets} />
+    <Stats stats={response.stats} />
 </div>

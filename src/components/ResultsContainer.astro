@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+
+const { response } = Astro.props;
+---
+<div>
+    {
+        Object.entries(response).map(([key, entry]) => {
+            const { weapon, collectible } = response[key];
+            const weaponIcon = weapon.displayProperties?.icon;
+            const watermark = weapon.iconWatermark;
+            const collectibleIcon = collectible?.displayProperties?.icon;
+            const name = weapon.displayProperties?.name;
+            const hash = weapon.hash;
+
+            return (
+                <a href={`http://localhost:4321/weapons/${hash}`}>
+                    {collectibleIcon ? (
+                        <div>
+                            <Image
+                                src={`https://bungie.net${collectibleIcon}`}
+                                alt={name}
+                                width="46"
+                                height="46"
+                            />
+                        </div>
+                    ) : (
+                    <div class="weapon-image-container">
+                            {weaponIcon && (
+                                <Image
+                                    src={`https://bungie.net${weaponIcon}`}
+                                    alt={name}
+                                    width="46"
+                                    height="46"
+                                    class="weapon-icon"
+                                />
+                            )}
+                            {watermark && (
+                                <Image
+                                    src={`https://bungie.net${watermark}`}
+                                    alt="Watermark"
+                                    width="46"
+                                    height="46"
+                                    class="weapon-watermark"
+                                />
+                            )}
+                        </div>
+                    )}
+                    <h4>{name}</h4>
+                </a>
+            );
+        })
+    }
+</div>
