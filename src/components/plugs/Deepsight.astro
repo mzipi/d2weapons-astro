@@ -1,17 +1,18 @@
 ---
 const { deepsight } = Astro.props;
 ---
+
 <div class="deepsight">
-    <div class="deepsight-icon">
-        <img 
-            src={`https://www.bungie.net${deepsight.displayProperties.icon}`} 
-            alt={deepsight.displayProperties.name} 
-            width="64" 
-            height="64" 
-        />
-    </div>
-    <div class="deepsight-info">
-        <h4>{deepsight.displayProperties.name}</h4>
-        <p>{deepsight.displayProperties.description}</p>
+    <img
+        src={`https://www.bungie.net${deepsight.displayProperties.icon}`}
+        alt={deepsight.displayProperties.name}
+        width="64"
+        height="64"
+    />
+    <div class="deepsight-tooltip">
+        <span class="deepsight-tooltip-info">
+            <h4>{deepsight.displayProperties.name}</h4>
+            <p>{deepsight.displayProperties.description}</p>
+        </span>
     </div>
 </div>

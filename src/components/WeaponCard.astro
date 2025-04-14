@@ -7,6 +7,7 @@ const { weapon } = Astro.props;
 ---
 
 <div id="weapon-container">
+    <Sockets sockets={weapon.sockets} />
     <h2>{weapon.weapon.displayProperties.name}</h2>
     <p>{weapon.weapon.flavorText}</p>
     {
@@ -53,7 +54,7 @@ const { weapon } = Astro.props;
     />
     <p>{weapon.weapon.itemTypeDisplayName}</p>
     <p>{weapon.equipmentSlot.displayProperties.name}</p>
-    {weapon.breakerType && <p>{weapon.breakerType.displayProperties.icon}</p>}
+    <!-- {weapon.breakerType && <p>{weapon.breakerType.displayProperties.icon}</p>} -->
     {
         weapon.weapon.secondaryIcon && (
             <Image
@@ -83,5 +84,4 @@ const { weapon } = Astro.props;
     </div>
     {weapon.collectible && <p>{weapon.collectible.sourceString}</p>}
     <Stats stats={weapon.stats} />
-    <Sockets sockets={weapon.sockets} />
 </div>

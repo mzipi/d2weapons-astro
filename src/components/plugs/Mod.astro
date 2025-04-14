@@ -4,13 +4,16 @@ const { mod } = Astro.props;
 ---
 
 <div class="mod">
-    <div class="mod-image">
-        <Image
-            src={`https://www.bungie.net${mod.displayProperties.icon}`}
-            alt={mod.displayProperties.name}
-            width="64"
-            height="64"
-        />
+    <Image
+        src={`https://www.bungie.net${mod.displayProperties.icon}`}
+        alt={mod.displayProperties.name}
+        width="64"
+        height="64"
+    />
+    <div class="mod-tooltip">
+        <span class="mod-tooltip-info">
+            <h4>{mod.displayProperties.name}</h4>
+            <p>{mod.displayProperties.description}</p>
+        </span>
     </div>
-    <span>{mod.displayProperties.name}</span>
 </div>

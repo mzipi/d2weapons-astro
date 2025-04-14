@@ -76,27 +76,6 @@ p {
     border-color: #0954a5;
 }
 
-.perk {
-    position: relative;
-    cursor: pointer;
-}
-
-.tooltip {
-    display: none;
-    position: absolute;
-    top: -100%;
-    left: 100%;
-    background-color: black;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    width: 400px;
-}
-
-.perk:hover .tooltip {
-    display: block;
-}
-
 .highlighted-perk>img {
     border-radius: 50%;
     border: 1px solid #369eff;
@@ -144,10 +123,6 @@ button:disabled {
     height: 180px;
 }
 
-.sockets-perks, .sockets-mods {
-    display: flex;
-}
-
 .rasgo-mejorado {
     position: relative;
     display: inline-block;
@@ -158,18 +133,71 @@ button:disabled {
     height: 32px;
 }
 
-.perk-image {
-    display: inline-block;
-    position: relative;
+
+
+
+.masterwork-item {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(10, auto);
+}
+
+.sockets-perks,
+.sockets-mods,
+.sockets-masterworks {
+    display: flex;
+}
+
+.masterwork,
+.intrinsic,
+.mod,
+.deepsight,
+.levelboost {
+    display: inline;
+}
+
+.perk-icon {
     background-color: #62aadd;
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    overflow: hidden;
     padding: 10px;
     border: 3px solid rgba(255, 255, 255, 0.514);
 }
 
-.mod-image {
+.masterwork-tooltip,
+.intrinsic-tooltip,
+.perk-tooltip,
+.mod-tooltip,
+.deepsight-tooltip,
+.levelboost-tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.masterwork-tooltip-info,
+.intrinsic-tooltip-info,
+.perk-tooltip-info,
+.mod-tooltip-info,
+.deepsight-tooltip-info,
+.levelboost-tooltip-info {
+    display: none;
+    position: absolute;
+    top: -100%;
+    left: 100%;
+    background-color: black;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.masterwork:hover .masterwork-tooltip-info,
+.intrinsic:hover .intrinsic-tooltip-info,
+.perk:hover .perk-tooltip-info,
+.mod:hover .mod-tooltip-info,
+.deepsight:hover .deepsight-tooltip-info,
+.levelboost:hover .levelboost-tooltip-info {
+    display: block;
 }

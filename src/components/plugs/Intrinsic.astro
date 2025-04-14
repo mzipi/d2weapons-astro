@@ -1,17 +1,18 @@
 ---
 const { intrinsic } = Astro.props;
 ---
+
 <div class="intrinsic">
-    <div class="intrinsic-icon">
-        <img 
-            src={`https://www.bungie.net${intrinsic.displayProperties.icon}`} 
-            alt={intrinsic.displayProperties.name} 
-            width="64" 
-            height="64" 
-        />
-    </div>
-    <div class="intrinsic-info">
-        <h4>{intrinsic.displayProperties.name}</h4>
-        <p>{intrinsic.displayProperties.description}</p>
+    <img
+        src={`https://www.bungie.net${intrinsic.displayProperties.icon}`}
+        alt={intrinsic.displayProperties.name}
+        width="64"
+        height="64"
+    />
+    <div class="intrinsic-tooltip">
+        <span class="intrinsic-tooltip-info">
+            <h4>{intrinsic.displayProperties.name}</h4>
+            <p>{intrinsic.displayProperties.description}</p>
+        </span>
     </div>
 </div>

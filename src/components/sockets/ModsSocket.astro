@@ -1,14 +1,16 @@
---- 
+---
 import Mod from "../plugs/Mod.astro";
 const { mods } = Astro.props;
 ---
 
 <div class="sockets-mods">
-    {mods.map((group, index) => (
-        <div key={`mod-${index}`} class="mod-type">
-            {group.map(mod => (
-                <Mod mod={mod} />
-            ))}
-        </div>
-    ))}
+    {
+        mods.map((group, index) => (
+            <div key={`mod-${index}`} class="mod-type">
+                {group.map((mod) => (
+                    <Mod mod={mod} />
+                ))}
+            </div>
+        ))
+    }
 </div>

@@ -10,10 +10,10 @@ const { sockets } = Astro.props;
 ---
 
 <div class="sockets">
-    {sockets.perks && <PerksSocket perks={sockets.perks} />}
-    {sockets.mods && <ModsSocket mods={sockets.mods} />}
     {sockets.masterworks && <MasterworksSocket masterworks={sockets.masterworks} />}
     {sockets.intrinsic && <IntrinsicSocket intrinsic={sockets.intrinsic} />}
+    {sockets.perks && <PerksSocket perks={sockets.perks} />}
+    {sockets.mods && <ModsSocket mods={sockets.mods} />}
     {sockets.deepsight && <DeepsightSocket deepsight={sockets.deepsight} />}
     {sockets.levelBoost && <LevelBoostSocket levelBoost={sockets.levelBoost} />}
 </div>
