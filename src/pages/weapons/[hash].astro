@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import SearchContainer from "../../components/SearchContainer.astro";
 import WeaponCard from "../../components/WeaponCard.astro";
 
+export const prerender = false;
+
 const { hash } = Astro.params;
 
 let response = null;
