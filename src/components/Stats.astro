@@ -6,9 +6,7 @@ const { stats } = Astro.props;
     {
         stats.map((stat) => (
             <div class="stat">
-                <p>
-                    {stat.name}: {stat.value}
-                </p>
+                {stat.name}: {stat.value}
                 <div class="stat-tooltip">
                     <span class="stat-tooltip-info">
                         <p>{stat.description}</p>
