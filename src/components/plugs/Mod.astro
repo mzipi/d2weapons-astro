@@ -2,7 +2,6 @@
 import Image from "astro/components/Image.astro";
 const { mod } = Astro.props;
 ---
-
 <div class="mod">
     <Image
         src={`https://www.bungie.net${mod.displayProperties.icon}`}
@@ -13,7 +12,7 @@ const { mod } = Astro.props;
     <div class="mod-tooltip">
         <span class="mod-tooltip-info">
             <h4>{mod.displayProperties.name}</h4>
-            <p>{mod.displayProperties.description}</p>
+            {mod.displayProperties.description && <p>{mod.displayProperties.description}</p>}
         </span>
     </div>
 </div>

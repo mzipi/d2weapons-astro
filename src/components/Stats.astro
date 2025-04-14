@@ -6,9 +6,14 @@ const { stats } = Astro.props;
     {
         stats.map((stat) => (
             <div class="stat">
-                <h3>{stat.name}</h3>
-                <p>{stat.description}</p>
-                <p>{stat.value}</p>
+                <p>
+                    {stat.name}: {stat.value}
+                </p>
+                <div class="stat-tooltip">
+                    <span class="stat-tooltip-info">
+                        <p>{stat.description}</p>
+                    </span>
+                </div>
             </div>
         ))
     }

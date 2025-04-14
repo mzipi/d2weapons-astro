@@ -114,11 +114,6 @@ button:disabled {
     gap: 20px;
 }
 
-.damageType {
-    height: 16px;
-    width: 16px;
-}
-
 .weapon-screenshot {
     height: 180px;
 }
@@ -132,6 +127,11 @@ button:disabled {
     width: 32px;
     height: 32px;
 }
+
+
+
+
+
 
 
 
@@ -152,8 +152,22 @@ button:disabled {
 .intrinsic,
 .mod,
 .deepsight,
-.levelboost {
+.levelboost,
+.perk {
     display: inline;
+}
+
+.weapon-data,
+.masterwork,
+.intrinsic,
+.mod,
+.deepsight,
+.levelboost,
+.perk,
+.ammo,
+.damage,
+.stat {
+    cursor: pointer;
 }
 
 .perk-icon {
@@ -165,23 +179,31 @@ button:disabled {
     border: 3px solid rgba(255, 255, 255, 0.514);
 }
 
+.weapon-tooltip,
 .masterwork-tooltip,
 .intrinsic-tooltip,
 .perk-tooltip,
 .mod-tooltip,
 .deepsight-tooltip,
-.levelboost-tooltip {
+.levelboost-tooltip,
+.ammo-tooltip,
+.damage-tooltip,
+.stat-tooltip {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
 }
 
+.weapon-tooltip-info,
 .masterwork-tooltip-info,
 .intrinsic-tooltip-info,
 .perk-tooltip-info,
 .mod-tooltip-info,
 .deepsight-tooltip-info,
-.levelboost-tooltip-info {
+.levelboost-tooltip-info,
+.ammo-tooltip-info,
+.damage-tooltip-info,
+.stat-tooltip-info {
     display: none;
     position: absolute;
     top: -100%;
@@ -198,6 +220,10 @@ button:disabled {
 .perk:hover .perk-tooltip-info,
 .mod:hover .mod-tooltip-info,
 .deepsight:hover .deepsight-tooltip-info,
-.levelboost:hover .levelboost-tooltip-info {
+.levelboost:hover .levelboost-tooltip-info,
+.weapon-data:hover .weapon-tooltip-info,
+.ammo:hover .ammo-tooltip-info,
+.damage:hover .damage-tooltip-info,
+.stat:hover .stat-tooltip-info {
     display: block;
 }

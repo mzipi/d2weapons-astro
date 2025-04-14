@@ -7,81 +7,105 @@ const { weapon } = Astro.props;
 ---
 
 <div id="weapon-container">
-    <Sockets sockets={weapon.sockets} />
-    <h2>{weapon.weapon.displayProperties.name}</h2>
-    <p>{weapon.weapon.flavorText}</p>
-    {
-        weapon.collectible ? (
-            weapon.collectible.displayProperties.icon && (
+    <div class="weapon-data">
+        {
+            weapon.collectible ? (
+                weapon.collectible.displayProperties.icon && (
+                    <div class="weapon-image-container">
+                        <Image
+                            src={`https://bungie.net${weapon.collectible.displayProperties.icon}`}
+                            alt={weapon.weapon.displayProperties.name}
+                            width="46"
+                            height="46"
+                        />
+                    </div>
+                )
+            ) : (
                 <div class="weapon-image-container">
-                    <Image
-                        src={`https://bungie.net${weapon.collectible.displayProperties.icon}`}
-                        alt={weapon.weapon.displayProperties.name}
-                        width="46"
-                        height="46"
-                    />
+                    {weapon.weapon.displayProperties && (
+                        <Image
+                            src={`https://bungie.net${weapon.weapon.displayProperties.icon}`}
+                            alt={weapon.weapon.displayProperties.name}
+                            width="46"
+                            height="46"
+                            class="weapon-icon"
+                        />
+                    )}
+                    {weapon.weapon.iconWatermark && (
+                        <Image
+                            src={`https://bungie.net${weapon.weapon.iconWatermark}`}
+                            alt="Watermark"
+                            width="46"
+                            height="46"
+                            class="weapon-watermark"
+                        />
+                    )}
                 </div>
             )
-        ) : (
-            <div class="weapon-image-container">
-                {weapon.weapon.displayProperties && (
-                    <Image
-                        src={`https://bungie.net${weapon.weapon.displayProperties.icon}`}
-                        alt={weapon.weapon.displayProperties.name}
-                        width="46"
-                        height="46"
-                        class="weapon-icon"
-                    />
-                )}
-                {weapon.weapon.iconWatermark && (
-                    <Image
-                        src={`https://bungie.net${weapon.weapon.iconWatermark}`}
-                        alt="Watermark"
-                        width="46"
-                        height="46"
-                        class="weapon-watermark"
-                    />
-                )}
-            </div>
-        )
-    }
-    <Image
-        src={`https://bungie.net${weapon.damageType.displayProperties.icon}`}
-        alt={weapon.damageType.displayProperties.name}
-        class="damageType"
-        width="16"
-        height="16"
-    />
-    <p>{weapon.weapon.itemTypeDisplayName}</p>
-    <p>{weapon.equipmentSlot.displayProperties.name}</p>
-    <!-- {weapon.breakerType && <p>{weapon.breakerType.displayProperties.icon}</p>} -->
+        }
+        <div class="weapon-tooltip">
+            <span class="weapon-tooltip-info">
+                <h2>{weapon.weapon.displayProperties.name}</h2>
+                <p>{weapon.weapon.flavorText}</p>
+                <p>Tipo de arma: {weapon.weapon.itemTypeDisplayName}</p>
+                <p>Slot: {weapon.equipmentSlot.displayProperties.name}</p>
+                {
+                    weapon.breakerType && (
+                        <p>{weapon.breakerType.displayProperties.icon}</p>
+                    )
+                }
+                {weapon.collectible && <p>{weapon.collectible.sourceString}</p>}
+            </span>
+        </div>
+    </div>
+    <div class="ammo">
+        <Image
+            src={`https://bungie.net${weapon.ammo.displayProperties.icon}`}
+            alt={weapon.ammo.displayProperties.name}
+            width="64"
+            height="64"
+        />
+        <div class="ammo-tooltip">
+            <span class="ammo-tooltip-info">
+                <p>{weapon.ammo.displayProperties.name}</p>
+                <p>{weapon.ammo.displayProperties.description}</p>
+            </span>
+        </div>
+    </div>
+    <div class="damage">
+        <Image
+            src={`https://bungie.net${weapon.damageType.displayProperties.icon}`}
+            alt={weapon.damageType.displayProperties.name}
+            class="damageType"
+            width="32"
+            height="32"
+        />
+        <div class="damage-tooltip">
+            <span class="damage-tooltip-info">
+                <p>{weapon.damageType.displayProperties.name}</p>
+                <p>{weapon.damageType.displayProperties.description}</p>
+            </span>
+        </div>
+    </div>
     {
         weapon.weapon.secondaryIcon && (
             <Image
                 src={`https://bungie.net${weapon.weapon.secondaryIcon}`}
                 alt={weapon.weapon.displayProperties.name}
-                width="100"
-                height="100"
+                width="200"
+                height="200"
             />
         )
     }
-    <!-- <Image
+    <!-- <div>
+        <Image
             src={`https://bungie.net${weapon.weapon.screenshot}`}
             alt={weapon.weapon.displayProperties.name}
             class="weapon-screenshot"
             width="319"
             height="180"
-        /> -->
-    <div>
-        <p>{weapon.ammo.displayProperties.name}</p>
-        <p>{weapon.ammo.displayProperties.description}</p>
-        <Image
-            src={`https://bungie.net${weapon.ammo.displayProperties.icon}`}
-            alt={weapon.ammo.displayProperties.name}
-            width="20"
-            height="20"
         />
-    </div>
-    {weapon.collectible && <p>{weapon.collectible.sourceString}</p>}
+    </div> -->
+    <Sockets sockets={weapon.sockets} />
     <Stats stats={weapon.stats} />
 </div>
